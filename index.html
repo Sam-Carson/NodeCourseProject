@@ -2,12 +2,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>MTB TripPlanner</title>
-	<link rel="stylesheet" href="themes/myTheme.min.css" />
+  <title>MTB TripTracker</title>
+  <link rel="stylesheet" href="themes/myTheme.min.css" />
 	<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <script src="index.js"></script>
 </head>
 <body>
   <!-- Start of Home page -->
@@ -17,20 +18,23 @@
       <!-- helpful location   -->
       <!-- https://demos.jquerymobile.com/1.2.0/docs/toolbars/docs-navbar.html -->
 
-      <h1>MTB TripPlanner </h1>
+      <h1>MTB TripTracker </h1>
       <div data-role="navbar" data-theme='a'>
         <ul>
           <li><a href="#home">Home</a></li>
-          <li><a href="#page2">Page 2</a></li>
-          <li><a href="#page3">Page 3</a></li>
-          <li><a href="#page4">Page 4</a></li>
+          <li><a href="#page2">User Info</a></li>
+          <li><a href="#page3">Add trip</a></li>
+          <li><a href="#page4">Your trips</a></li>
         </ul>
       </div><!-- /navbar -->
 
     </div>
     <!--  login page content -->
     <div data-role="content" data-theme='a'>
-      <h2> Welcome to the MTB TripPlanner. We'll suggest a location for you to go mountain biking based on your skill set.</h2>
+      <h2> Welcome to the MTB TripTracker. 
+      </h2>
+      <p>Keep track of your stats all in one place. <br />
+        We'll even let you know how many miles you've biked and your elevation gain.</p>
       <button><a href="#page2">Begin</a></button>
     </div>
 
@@ -44,13 +48,13 @@
   <div data-role="page" id="page2">
     <!--  page2 page header -->
     <div data-role="header" data-theme='b'>
-      <h1>MTB TripPlanner </h1>
+      <h1>MTB TripTracker </h1>
       <div data-role="navbar" data-theme='b'>
         <ul>
           <li><a href="#home">Home</a></li>
-          <li><a href="#page2">Page 2</a></li>
-          <li><a href="#page3">Page 3</a></li>
-          <li><a href="#page4">Page 4</a></li>
+          <li><a href="#page2">User Info</a></li>
+          <li><a href="#page3">Add trip</a></li>
+          <li><a href="#page4">Your trips</a></li>
         </ul>
       </div><!-- /navbar -->
     </div>
@@ -60,7 +64,7 @@
       <input type="text" value="" id="name" />
       Enter your age<br />
       <input type="text" value="" id="age" />
-      <button><a href="#page3">Submit</a></button> 
+      <button id="addUserBtn"><a href="#page3">Add user</a></button> 
     </div>
 
     <!--  newaccount page footer -->
@@ -75,29 +79,44 @@
   <div data-role="page" id="page3">
     <!--  page 3 header -->
     <div data-role="header" data-theme='c'>
-      <h1>MTB TripPlanner </h1>
+      <h1>MTB TripTracker </h1>
       <div data-role="navbar" data-theme='c'>
         <ul>
           <li><a href="#home">Home</a></li>
-          <li><a href="#page2">Page 2</a></li>
-          <li><a href="#page3">Page 3</a></li>
-          <li><a href="#page4">Page 4</a></li>
+          <li><a href="#page2">User Info</a></li>
+          <li><a href="#page3">Add trip</a></li>
+          <li><a href="#page4">Your trips</a></li>
         </ul>
       </div><!-- /navbar -->
     </div>
     <!--  page 3 content -->
     <div data-role="content" data-theme='c'>
-      <p> Welcome, 'userName'. 
-        Your birthday is on 'birthdate'. 
-        How experienced are you?
+      <h3>Tell us about your latest trip</h3>
+      <p> <!--Mountain, TrailName, Difficulty Rating(dropdown menu), Elevation, Distance-->
       </p>
-      <div id="divUserlist"></div>
+      Where were you riding <br />
+      <input type="text" value="" id="where" />
+      Trail name <br />
+      <input type="text" value="" id="trail" />
+      Trail difficulty rating <br />
       <form>
-        <button class="ui-btn ui-btn-b" value="newbie"><a href="#page4">Newbie</a></button>
-        <button class="ui-btn ui-btn-b" value="amatuer"><a href="#page4">Amatuer</a></button>
-        <button class="ui-btn ui-btn-b" value="expert"><a href="#page4">Expert</a></button>
+        <div class="ui-field-contain">
+          <label for="select-difficulty">Select a difficulty</label>
+          <select name="select-difficulty" id="select-difficulty">
+          <option value="green">Green Circle</option>
+          <option value="blue">Blue Square</option>
+          <option value="black">Black Diamond</option>
+          <option value="doubleBlack">Double Black Diamond</option>
+        </select>
+        </div>
       </form>
-    </div>
+      Distance (miles) <br />
+      <input type="text" value="" id="distance" />
+      Elevation gain<br />
+      <input type="text" value="" id="elevation" />
+
+      <button id="addTripBtn">Add Trip</button> 
+      <button id="clearBtn">Clear Data</button>
 
     <!--  page 3 footer -->
     <div data-role="footer" data-theme='c'>
@@ -110,13 +129,13 @@
   <div data-role="page" id="page4">
     <!--  page 4 header -->
     <div data-role="header" data-theme='a'>
-      <h1>MTB TripPlanner </h1>
+      <h1>MTB TripTracker </h1>
       <div data-role="navbar" data-theme='a'>
         <ul>
           <li><a href="#home">Home</a></li>
-          <li><a href="#page2">Page 2</a></li>
-          <li><a href="#page3">Page 3</a></li>
-          <li><a href="#page4">Page 4</a></li>
+          <li><a href="#page2">User Info</a></li>
+          <li><a href="#page3">Add trip</a></li>
+          <li><a href="#page4">Your trips</a></li>
         </ul>
       </div><!-- /navbar -->
     </div>
