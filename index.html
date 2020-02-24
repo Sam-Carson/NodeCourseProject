@@ -91,6 +91,7 @@
     </div>
     <!--  page 3 content -->
     <div data-role="content" data-theme='c'>
+      <h3 id="userNameHeader"></h3>
       <h3>Tell us about your latest trip</h3>
       <p> <!--Mountain, TrailName, Difficulty Rating(dropdown menu), Elevation, Distance-->
       </p>
@@ -98,10 +99,9 @@
       <input type="text" value="" id="where" />
       Trail name <br />
       <input type="text" value="" id="trail" />
-      Trail difficulty rating <br />
       <form>
         <div class="ui-field-contain">
-          <label for="select-difficulty">Select a difficulty</label>
+          <label for="select-difficulty">Select a trail difficulty</label>
           <select name="select-difficulty" id="select-difficulty">
           <option value="green">Green Circle</option>
           <option value="blue">Blue Square</option>
@@ -142,8 +142,7 @@
     <!--  page 4 content -->
     <div data-role="content" data-theme='a'>
       <p> </p>
-      <p id="IDparmHere">change1</p> <!-- hidden    a place to stash the user ID -->
-      <p> We recommend you check out Galbraith Mountain located in Bellingham, Wa!</p>
+      <p id="IDparmHere"></p> <!-- hidden    a place to stash the user ID -->
     </div>
 
     <!--  page 4 footer -->

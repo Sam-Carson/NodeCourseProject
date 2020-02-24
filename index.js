@@ -1,30 +1,61 @@
 let userArray = [];
 
+let chosenPlayer = {
+  name: ""
+}
 
-
-var newUser = function(pName, pAge) {
+let newUser = function(pPlayerID, pName, pAge) {
+  this.PlayerID = pPlayerID;
   this.Name = pName;
   this.Age = pAge;
 }
 
+let newTrip = function(pMountain, pTrail, pDifficulty, pDistance, pElevation){
+  this.Mountain = pMountain;
+  this.Trail = pTrail;
+  this.Difficulty = pDifficulty;
+  this.Distance = pDistance;
+  this.Elevation = pElevation;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
+  //user object constructor
 document.getElementById('addUserBtn').addEventListener("click", function(){
-  userArray.push(new newUser(document.getElementById("name").value, document.getElementById("age").value));
+  userArray.push(new newUser(userArray.length , document.getElementById("name").value, document.getElementById("age").value));
 });
 
+//trip object constructor
+document.getElementById("addTripBtn")
+
+document.getElementById("addTripBtn").addEventListener("click", function(){
+
+})
+
+//clear input fields
 document.getElementById("clearBtn").addEventListener("click", function () {
   document.getElementById("where").value = "";
   document.getElementById("trail").value = "";
   document.getElementById("select-difficulty").value = "";
   document.getElementById("distance").value = "";
   document.getElementById("elevation").value = "";
+});
 
+
+
+// custom user header page3
+$(document).on("pagebeforeshow", "#page3", function(event) {
+  let currentUser = document.getElementById("name").value;
+  chosenPlayer.name = currentUser;
+  document.getElementById("userNameHeader").innerHTML = "Welcome " +chosenPlayer.name;
 });
 // $(document).on("pagebeforeshow", "#page2", function (event) {   // have to use jQuery 
 //  // document.getElementById("IDparmHere").innerHTML = "";
 //   createList();
 // });
+
+
+
 
 });
 
