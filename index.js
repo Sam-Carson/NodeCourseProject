@@ -1,5 +1,5 @@
 let userArray = [];
-
+let tripArray = [];
 let chosenPlayer = {
   name: ""
 }
@@ -22,15 +22,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //user object constructor
 document.getElementById('addUserBtn').addEventListener("click", function(){
-  userArray.push(new newUser(userArray.length , document.getElementById("name").value, document.getElementById("age").value));
+  userArray.push(new newUser(userArray.length, 
+    document.getElementById("name").value, 
+    document.getElementById("age").value));
 });
 
 //trip object constructor
-document.getElementById("addTripBtn")
-
 document.getElementById("addTripBtn").addEventListener("click", function(){
-
-})
+  tripArray.push(new newTrip(document.getElementById("where").value, 
+  document.getElementById("trail").value, 
+  document.getElementById("select-difficulty").value,
+  document.getElementById("distance").value, 
+  document.getElementById("elevation").value));
+});
 
 //clear input fields
 document.getElementById("clearBtn").addEventListener("click", function () {
@@ -40,8 +44,6 @@ document.getElementById("clearBtn").addEventListener("click", function () {
   document.getElementById("distance").value = "";
   document.getElementById("elevation").value = "";
 });
-
-
 
 // custom user header page3
 $(document).on("pagebeforeshow", "#page3", function(event) {
