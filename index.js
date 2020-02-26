@@ -34,15 +34,12 @@ document.getElementById("addTripBtn").addEventListener("click", function(){
   document.getElementById("select-difficulty").value,
   document.getElementById("distance").value, 
   document.getElementById("elevation").value));
+  clearUserInput();
 });
 
 //clear input fields
 document.getElementById("clearBtn").addEventListener("click", function () {
-  document.getElementById("where").value = "";
-  document.getElementById("trail").value = "";
-  document.getElementById("select-difficulty").value = "";
-  document.getElementById("distance").value = "";
-  document.getElementById("elevation").value = "";
+  clearUserInput();
 });
 
 // custom user header page3
@@ -57,7 +54,36 @@ $(document).on("pagebeforeshow", "#page3", function(event) {
 // });
 
 
+// clears fields so input doesn't remain after leaving and then returning to page 3
+ $(document).on("pagebeforeshow", "#page3", function (Event) {
+  clearUserInput();
+ });
 
+ function clearUserInput() {
+  document.getElementById("where").value = "";
+  document.getElementById("trail").value = "";
+  document.getElementById("select-difficulty").value = "Green Circle";
+  document.getElementById("distance").value = "";
+  document.getElementById("elevation").value = "";
+ };
+
+ $(document).on("pagebeforeshow", "#page4", function(event) {
+  let currentUser = document.getElementById("name").value;
+  chosenPlayer.name = currentUser;
+  document.getElementById("userNameHeaderPage4").innerHTML = chosenPlayer.name + ", here are your recorded rides";
+
+});
+
+$(document).on("onload", "#page4", function(event) {
+  if (tripArray = null) {
+    document.getElementById("userTripList").innerHTML = "No trips recorced";
+  }
+});
+
+
+// To Do List
+// 1. when fields are empty, have statements that say so.
+// 2. create list on page 4
 
 });
 
