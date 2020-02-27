@@ -1,5 +1,6 @@
 let userArray = [];
 let tripArray = [];
+let selectDiff='not selected';
 let chosenPlayer = {
   name: ""
 }
@@ -11,6 +12,7 @@ let newUser = function(pPlayerID, pName, pAge) {
 }
 
 let newTrip = function(pMountain, pTrail, pDifficulty, pDistance, pElevation){
+  this.trailID=tripArray.length+1;
   this.Mountain = pMountain;
   this.Trail = pTrail;
   this.Difficulty = pDifficulty;
@@ -18,6 +20,13 @@ let newTrip = function(pMountain, pTrail, pDifficulty, pDistance, pElevation){
   this.Elevation = pElevation;
 }
 
+tripArray.push(new newTrip("Galbraith", "U-line", "black", 40, 500));
+tripArray.push(new newTrip("Tiger", "Predator", "double black", 1000, 1100));
+tripArray.push(new newTrip("Galbraith", "async", "black", 45, 800));
+tripArray.push(new newTrip("Duthie", "Awesome", "blue", 200, 300));
+tripArray.push(new newTrip("Mt. Rainer", "Paradise", "Green Circle", 500, 3000));
+tripArray.push(new newTrip("Mt. Hood", "TrailA", "Green Circle", 50, 2000));
+tripArray.push(new newTrip("Stevens", "TrailB", "Green Circle", 30, 1000));
 document.addEventListener("DOMContentLoaded", function () {
 
   //user object constructor
@@ -48,18 +57,68 @@ $(document).on("pagebeforeshow", "#page3", function(event) {
   chosenPlayer.name = currentUser;
   document.getElementById("userNameHeader").innerHTML = "Welcome " +chosenPlayer.name;
 });
-// $(document).on("pagebeforeshow", "#page2", function (event) {   // have to use jQuery 
-//  // document.getElementById("IDparmHere").innerHTML = "";
-//   createList();
-// });
 
 
+$(document).on("change", "#select-difficulty", function (event, ui) {
+  selectedDiff = $('#select-difficulty').val();
+});
 // clears fields so input doesn't remain after leaving and then returning to page 3
  $(document).on("pagebeforeshow", "#page3", function (Event) {
   clearUserInput();
  });
 
- function clearUserInput() {
+ $(document).on("pagebeforeshow", "#page4", function(event) {
+  let currentUser = document.getElementById("name").value;
+  chosenPlayer.name = currentUser;
+  document.getElementById("userNameHeaderPage4").innerHTML = chosenPlayer.name + ", here are your recorded rides";
+  createList();
+});
+
+$(document).on("pagebeforeshow", "#page5", function (event) {   // have to use jQuery 
+  let localID =  document.getElementById("IDparmHere").innerHTML;
+  document.getElementById("aWhere").innerHTML = "The region is: " + tripArray[localID-1].Mountain;
+  document.getElementById("aTrail").innerHTML = "The trail is: " + tripArray[localID - 1].Trail;
+  document.getElementById("aDifficulty").innerHTML = "Difficulty level is: " + tripArray[localID - 1].Difficulty;
+  document.getElementById("aDistance").innerHTML = "The distance was: " + tripArray[localID - 1].Distance;
+  document.getElementById("aElevation").innerHTML = "The elevation was: " + tripArray[localID - 1].Elevation;
+ });
+
+ document.getElementById("sortDistanceBtn").addEventListener("click", function(){
+  tripArray=JSON.parse(JSON.stringify(tripArray));
+  tripArray.sort(function(a,b){
+     let milesA = a.Distance;
+     let milesB = b.Distance;
+     if(milesA < milesB){
+       return -1;
+     }else{
+       return 1;
+     }
+   });
+   createList();
+   document.location.href = "index.html#page4";
+ });
+
+ document.getElementById("sortTrailsBtn").addEventListener("click", function(){
+   tripArray=JSON.parse(JSON.stringify(tripArray));
+   tripArray.sort(function(a,b){
+     let trailA = a.Trail.toLowerCase(); //.sort is case sensitive
+     let trailB = b.Trail.toLowerCase();
+     if(trailA < trailB){
+       return -1;
+     }else{
+       return 1;
+     }
+   });
+   console.log(tripArray);
+   createList();
+   document.location.href = "index.html#page4";
+ });
+
+// END OF DOM
+});
+
+
+function clearUserInput() {
   document.getElementById("where").value = "";
   document.getElementById("trail").value = "";
   document.getElementById("select-difficulty").value = "Green Circle";
@@ -67,51 +126,30 @@ $(document).on("pagebeforeshow", "#page3", function(event) {
   document.getElementById("elevation").value = "";
  };
 
- $(document).on("pagebeforeshow", "#page4", function(event) {
-  let currentUser = document.getElementById("name").value;
-  chosenPlayer.name = currentUser;
-  document.getElementById("userNameHeaderPage4").innerHTML = chosenPlayer.name + ", here are your recorded rides";
+function createList()
+{
+  // clear prior data
+  var userTripList = document.getElementById("userTripList");
+  while (userTripList.firstChild) {    // remove any old data so don't get duplicates
+      userTripList.removeChild(userTripList.firstChild);
+  };
 
-});
+  var ul = document.createElement('ul');  
+  tripArray.forEach(function (element,) {   // use handy array forEach method
+    var li = document.createElement('li');
+    li.innerHTML = "<a data-transition='pop' class='oneTrip' data-parm=" + element.trailID + "  href='#page5'>Go To Trip Details </a> " + element.Trail + "  (" + element.Distance + " miles) " ;
+    ul.appendChild(li);
+  });
+  userTripList.appendChild(ul)
 
-$(document).on("onload", "#page4", function(event) {
-  if (tripArray = null) {
-    document.getElementById("userTripList").innerHTML = "No trips recorced";
-  }
-});
-
-
-// To Do List
-// 1. when fields are empty, have statements that say so.
-// 2. create list on page 4
-
-});
-
-// function createList()
-// {
-//   // clear prior data
-//   var divUserlist = document.getElementById("divUserlist");
-//   while (divUserlist.firstChild) {    // remove any old data so don't get duplicates
-//       divUserlist.removeChild(divUserlist.firstChild);
-//   };
-
-//   var ul = document.createElement('ul');  
-//   userArray.forEach(function (element,) {   // use handy array forEach method
-//     var li = document.createElement('li');
-//     li.innerHTML = "<a data-transition='pop' class='onePlayer' data-parm=" + element.PlayerID + "  href='#page3'>Jump </a> " + element.PlayerName;
-//     ul.appendChild(li);
-//   });
-//   divUserlist.appendChild(ul)
-
-//     // set up an event for each new li item, if user clicks any, it writes >>that<< items data-parm into the hidden html 
-//     var classname = document.getElementsByClassName("onePlayer");
-//     Array.from(classname).forEach(function (element) {
-//         element.addEventListener('click', function(){
-//             var parm = this.getAttribute("data-parm");  // passing in the record.Id
-//             console.log(parm);
-//             //do something here with parameter on  pickbet page
-//             document.getElementById("IDparmHere").innerHTML = parm;
-//             document.location.href = "index.html#page3";
-//         });
-//     });
-//   } ;
+    // set up an event for each new li item, if user clicks any, it writes >>that<< items data-parm into the hidden html 
+    var classname = document.getElementsByClassName("oneTrip");
+    Array.from(classname).forEach(function (element) {
+        element.addEventListener('click', function(){
+            var parm = this.getAttribute("data-parm");  // passing in the record.Id
+            console.log(parm);
+            document.getElementById("IDparmHere").innerHTML = parm;
+            document.location.href = "index.html#page5";
+        });
+    });
+  } ;
